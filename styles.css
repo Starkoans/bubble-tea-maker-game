@@ -1,0 +1,45 @@
+body {
+	margin: 0;
+	padding: 0;
+	height: 100dvh;
+    position: relative;
+}
+.to-drag {
+	margin-left: 10px;
+	display: inline-block;
+	position: absolute;
+	background-color: red;
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+	transition: height 0.3s ease-in-out;
+}
+.drag-area {
+    position: relative;
+	height: 130px;
+    width: 500px;
+	background-color: burlywood;
+	text-align: center;
+	display: grid;
+	overflow-x: auto; /* Горизонтальная прокрутка */
+	white-space: nowrap;
+	gap: 5px;
+}
+
+.head {
+	background-color: rgb(148, 148, 253);
+}
+.chest {
+	background-color: rgb(165, 240, 130);
+}
+.hips {
+	background-color: rgb(245, 217, 95);
+}
+.feet {
+	background-color: rgb(236, 166, 166);
+}
+.to-drop {
+	width: 150px;
+	height: 150px;
+	border: 1px dashed blue;
+}
