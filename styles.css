@@ -1,56 +1,140 @@
 body {
 	margin: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 16px;
 	padding: 0;
 	height: 100dvh;
 	position: relative;
+	background-color: rgb(53, 53, 80);
+	color: white;
+	user-select: none;
+	-webkit-user-select: none; /* Для браузеров на основе WebKit */
+	-moz-user-select: none; /* Для Firefox */
+	-ms-user-select: none;
 }
-p {
+button,
+input {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+p,
+ul {
 	padding: 0;
 	margin: 0;
+}
+li {
+	list-style-type: none;
+}
+.drop-area {
+	height: 600px;
+	width: 360px;
+	background-color: rgb(27, 27, 43);
+	background-size: cover; /* или contain, если хотите сохранить пропорции */
+	background-position: center; /* Центрирование изображения */
+	background-repeat: no-repeat;
+	background-image: url('./empty-cup.png');
 }
 .to-drag {
 	background-size: cover; /* или contain, если хотите сохранить пропорции */
 	background-position: center; /* Центрирование изображения */
 	background-repeat: no-repeat; /* Запрет на повтор изображения */
-	margin-left: 10px;
+
 	display: inline-block;
 	position: absolute;
-	width: 100px;
-	height: 100px;
+	width: 90px;
+	height: 90px;
 	cursor: pointer;
-	transition: height 0.3s ease-in-out;
+	border-radius: 10px;
+	padding: 10px;
+	transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
 .drag-area {
 	position: relative;
-	height: 130px;
+	height: 180px;
 	width: 100%;
-	background-color: burlywood;
+	background-color: rgb(27, 27, 43);
 	text-align: center;
 	overflow-x: auto; /* Горизонтальная прокрутка */
 	white-space: nowrap;
 	display: flex;
 	flex-wrap: nowrap;
 }
+.btn {
+	color: white;
+	background: linear-gradient(to right, #ff2d2d, #ff8e38);
+	margin-top: 30px;
+	position: relative;
+	border: none;
+	color: white;
+	padding: 15px 30px;
+	font-size: 20px;
+	font-weight: 800;
+	font-family: inherit;
+	cursor: pointer;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	transform: skewX(-20deg);
+	border: 2px solid black;
+	transition: all 0.3s ease;
+}
+input {
+	border-bottom: 2px solid black;
+	color: #eb3288;
+	font-size: 20px;
+	font-weight: 800;
+	padding-bottom: 5px;
+	text-align: center;
+}
+.hello {
+	display: flex;
+	align-items: end;
+	margin-bottom: 10px;
+}
+.hello p {
+	padding-right: 5px;
+}
 
+.btn:disabled {
+	cursor: not-allowed;
+	color: rgb(85, 85, 85);
+	background-color: rgb(139, 139, 139);
+	padding: 10px;
+	font-size: 20px;
+}
 .cap {
-	background-color: rgb(148, 148, 253);
+	background-color: rgba(44, 44, 255, 0.336);
+	border: 5px solid #0580b4;
 }
 .milk {
-	background-color: rgb(165, 240, 130);
+	background-color: rgba(116, 255, 51, 0.336);
+	border: 5px solid #1f9408;
 }
 .topping {
-	background-color: rgb(245, 217, 95);
+	background-color: rgba(255, 213, 29, 0.336);
+	border: 5px solid #ccc509;
 }
 .teabase {
-	background-color: rgb(236, 166, 166);
+	background-color: rgba(255, 42, 42, 0.336);
+	border: 5px solid #861625;
 }
 .to-drop {
-	width: 150px;
+	width: 360px;
 	height: 150px;
-	border: 1px dashed blue;
 }
-
+.dropped {
+	height: 150px;
+}
+section#level {
+	display: flex;
+	justify-content: space-around;
+	width: 100vw;
+	height: 650px;
+}
 .drop-area-cap {
 	background-size: cover; /* или contain, если хотите сохранить пропорции */
 	background-position: center; /* Центрирование изображения */
@@ -61,21 +145,121 @@ p {
 .timer-container {
 	display: flex;
 	background-color: rgb(229, 214, 243);
+	color: #350032;
+	font-size: 20px;
+	font-weight: 800;
 	align-items: center;
+	justify-content: center;
 	height: 40px;
-	width: 60px;
+	width: 150px;
 	padding: 10px;
+	margin-right: 10px;
+}
+.character {
+	background-size: cover; /* или contain, если хотите сохранить пропорции */
+	background-position: center; /* Центрирование изображения */
+	background-repeat: no-repeat; /* Запрет на повтор изображения */
+	background-image: url('./customer_1.png');
+	background-color: rgb(255, 255, 255);
+	height: 120px;
+	margin-top: 80px;
+	border: 5px solid rgb(26, 26, 41);
+	width: 120px;
 }
 .task {
-	background: rgb(227, 197, 255);
+	background: white;
 	padding: 10px;
+	height: fit-content;
+}
+.task::after {
+	content: '';
+	position: relative;
+	bottom: -100px;
+	left: 80%;
+
+	transform: translateX(-50%);
+	border-left: 40px solid transparent;
+	border-right: 40px solid transparent;
+	border-top: 70px solid white;
+}
+.full-task {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: nowrap;
+	align-items: end;
+}
+.task div {
+	display: flex;
+	flex-direction: row;
+}
+.task div div {
+	margin-left: 10px;
 }
 .score-container {
 	display: flex;
+	width: 150px;
+	justify-content: center;
+	font-weight: 800;
+	font-size: 20px;
 }
 .record-container {
 	display: flex;
 }
-#game-header{
+#game-header {
 	display: flex;
+	align-items: center;
+	width: 100vw;
+	justify-content: center;
+}
+#curren-game-info {
+	display: flex;
+}
+
+.modal {
+	display: none; /* Скрыто по умолчанию */
+	align-items: center;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6); /* Фон с прозрачностью */
+}
+
+.modal-content {
+	background-color: #e5e3ff;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	color: black;
+	margin: 15% auto;
+	padding: 30px;
+
+	border: 2px solid rgb(0, 0, 0) ea3;
+	width: 30%;
+	font-size: 20px;
+	border-radius: 10px;
+}
+.modal-content p {
+	text-align: center;
+}
+.modal-content img {
+	width: 200px;
+}
+.close {
+	color: #e45d5d;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #eb3232;
+	text-decoration: none;
+	cursor: pointer;
 }

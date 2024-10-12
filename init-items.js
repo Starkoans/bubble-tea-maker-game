@@ -9,7 +9,7 @@ itemsArr.forEach((elem, ind) => {
 	dragElem.dataset.id = elem.id;
 	dragElem.dataset.title = elem.title;
 	dragElem.dataset.category = elem.category;
-	const elementWidth = 150;
+	const elementWidth = 130;
 	const gap = 10;
 
 	const positionX = (Number(elem.id)-1) * (elementWidth + gap);

@@ -4,8 +4,6 @@ let dropAreas = document.querySelectorAll('.to-drop');
 export let droppedList = document.querySelector('.dropped-list');
 export let droppedListArr = [];
 
-
-
 dragElems.forEach((dragElement) => {
 	dragElement.ondragstart = function () {
 		return false;
@@ -26,46 +24,62 @@ function dropItem(item, area) {
 
 	const centerX = targetRect.left + targetRect.width / 2 - dragRect.width / 2;
 	const centerY = targetRect.top;
-	item.classList.add('dropped')
+	// item.classList.add('dropped');
 	item.style.left = centerX + 'px';
 	item.style.top = centerY + 'px';
-	droppedListArr.push(item.id);
-	const droppedElem = document.createElement('p');
-	droppedElem.innerText = item.innerText;
-	droppedElem.dataset.id = `${item.id}-list`;
-	droppedElem.dataset.category = item.dataset.category;
-	
-	droppedList.appendChild(droppedElem);
+
+	document.body.appendChild(item);
+	droppedListArr.push(item);
 }
+
 function returnToSpawn(element) {
 	document.body.removeChild(element);
 
-	const elementWidth = 150;
+	const elementWidth = 130;
 	const gap = 10;
 	const positionX = (element.dataset.id - 1) * (elementWidth + gap);
 	const positionY = 10;
 
 	element.style.left = `${positionX}px`;
 	element.style.top = `${positionY}px`;
-	element.classList.remove('dropped')
+	element.classList.remove('dropped');
+
 	spawnArea.appendChild(element);
 	element.style.height = '100px';
+	
+	element.style.width = '100px';
+	let newDroppedList = droppedListArr.filter((item) => item.id !== element.id);
+	droppedListArr = newDroppedList;
 }
 
 export function cleanDropareas() {
 	let toRemove = document.body.querySelectorAll('.dropped');
-	console.log(toRemove)
+	console.log(toRemove);
 	toRemove.forEach((elem) => {
-		
 		returnToSpawn(elem);
-		removeFromList(elem);
 	});
 }
+
+function returnToSpawnSameCategoryElem(elem) {
+	let sameCategoryElemsInList = droppedListArr.filter(
+		(dropped) => dropped.dataset.category === elem.dataset.category
+	);
+	if (sameCategoryElemsInList.length > -1) {
+		sameCategoryElemsInList.forEach((sameElem) => {
+			let elemToRemove = document.querySelector(`[data-id="${sameElem.id}" ]`);
+			if (elemToRemove.id !== elem.id) {
+				returnToSpawn(elemToRemove);
+			}
+		});
+	}
+}
+
 function handleMousedown(event, element) {
 	var dragElemCoords = getCoords(element);
 	let shiftX = event.pageX - dragElemCoords.left;
 	let shiftY = event.pageY - dragElemCoords.top;
 	element.style.height = '100px';
+	element.style.width = '100px';
 	element.style.position = 'absolute';
 	moveAt(event, element, shiftX, shiftY);
 
@@ -74,7 +88,6 @@ function handleMousedown(event, element) {
 
 	document.onmousemove = function (e) {
 		moveAt(e, element, shiftX, shiftY);
-		removeFromList(element);
 
 		collisionCapFlag = checkCollision(element, dropAreas[0]);
 		collisionMilkFlag = checkCollision(element, dropAreas[1]);
@@ -87,53 +100,29 @@ function handleMousedown(event, element) {
 		element.onmouseup = null;
 
 		if (collisionCapFlag && element.dataset.category === 'cap') {
-			element.style.height = '150px';
-
-			let sameCategoryElemsInList = droppedList.querySelectorAll(
-				`[data-category="${element.dataset.category}" ]`
-			);
-
-			if (sameCategoryElemsInList.length > 0) {
-				sameCategoryElemsInList.forEach((sameElem) => {
-					let sameElemId = sameElem.dataset.id;
-					let cuttedID = sameElemId.substring(0, sameElemId.length - 5);
-
-					let elemToRemove = document.querySelector(`[data-id="${cuttedID}" ]`);
-					if (cuttedID !== element.id) {
-						returnToSpawn(elemToRemove);
-					}
-				});
-			}
+			returnToSpawnSameCategoryElem(element);
+			element.style.height = '130px';
+			element.style.width = '130px';
 			dropItem(element, dropAreas[0]);
-
 		} else if (collisionMilkFlag && element.dataset.category === 'milk') {
-			element.style.height = '150px';
+			returnToSpawnSameCategoryElem(element);
+			element.style.height = '130px';
+			element.style.width = '130px';
 			dropItem(element, dropAreas[1]);
 		} else if (collisionToppingFlag && element.dataset.category === 'topping') {
-			element.style.height = '150px';
+			returnToSpawnSameCategoryElem(element);
+			element.style.height = '130px';
+			element.style.width = '130px';
 			dropItem(element, dropAreas[2]);
 		} else if (collisionTeabaseFlag && element.dataset.category === 'teabase') {
-			element.style.height = '150px';
+			returnToSpawnSameCategoryElem(element);
+			element.style.height = '130px';
+			element.style.width = '130px';
 			dropItem(element, dropAreas[3]);
 		} else {
 			returnToSpawn(element);
 		}
 	};
-}
-
-function removeFromList(element) {
-	let elemToDropFromList = droppedList.querySelector(
-		`[data-id="${element.dataset.id}-list" ]`
-	);
-	// console.log('remove: ', elemToDropFromList);
-	if (elemToDropFromList !== null) {
-		let filteredList = droppedListArr.filter(
-			(item) => item !== element.dataset.id
-		);
-		droppedListArr = filteredList;
-
-		droppedList.removeChild(elemToDropFromList);
-	}
 }
 
 function moveAt(e, element, shiftX, shiftY) {

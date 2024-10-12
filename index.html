@@ -4,55 +4,83 @@
 		<meta charset="UTF-8" />
 		<meta
 			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
+			content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 
 		<script
 			type="module"
 			defer
-			src="./init-items.js"
-		></script>
-		
+			src="./init-items.js"></script>
+
 		<script
 			type="module"
 			defer
-			src="./items.js"
-		></script>
+			src="./items.js"></script>
 		<script
 			defer
 			type="module"
-			src="./main.js"
-		></script>
+			src="./main.js"></script>
 		<script
 			type="module"
 			defer
-			src="./level-task.js"
-		></script>
+			src="./level-task.js"></script>
 		<link
 			href="./styles.css"
-			rel="stylesheet"
-		/>
+			rel="stylesheet" />
 	</head>
 	<body>
-		<div class="drag-area"></div>
 		<section id="game-header">
-			<div class="timer-container container"> Timer: <p class="timer">0</div></div>
-			<button class="start-btn">Start</button>
-			<div>
-				<div class="score-container container"> Score: <p class="score">0</div></div>
-				<div class="record-container container"> Your record: <p class="record">0</div></div>
+			<div class="timer-container container">
+				Timer:
+				<p class="timer">0</p>
+			</div>
+
+			<div class="score-container container">
+				Score:
+				<p class="score">0</p>
 			</div>
 		</section>
-		
-		<div class="task"></div>
-		<div class="to-drop drop-area-head"></div>
-		<div class="to-drop"></div>
-		<div class="to-drop"></div>
-		<div class="to-drop"></div>
-		<div>
-			<p>Dropped:</p>
-			<div class="dropped-list"></div>
+
+		<section id="level">
+			<div class="drop-area">
+				<div class="to-drop cap"></div>
+				<div class="to-drop milk"></div>
+				<div class="to-drop topping"></div>
+				<div class="to-drop teabase"></div>
+			</div>
+			<div class="full-task">
+				<div class="task"></div>
+				<div class="character"></div>
+			</div>
+		</section>
+
+		<div class="drag-area"></div>
+
+		<div
+			id="startGameModal"
+			class="modal">
+			<div class="modal-content">
+				<div class="hello">
+					<p>Hello,</p>
+					<input
+						autofocus
+						type="text"
+						id="playerName"
+						placeholder="Имя игрока" />
+				</div>
+
+				<img src="./logo.png" />
+				<button class="start-btn btn">Start game</button>
+			</div>
+		</div>
+		<div
+			id="endGameModal"
+			class="modal">
+			<div class="modal-content">
+				<p>Your records</p>
+				<div class="record-container container"><p class="record">0</p></div>
+				<button class="restart-btn btn">Play Again</button>
+			</div>
 		</div>
 	</body>
 </html>
