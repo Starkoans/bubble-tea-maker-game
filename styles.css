@@ -1,45 +1,81 @@
 body {
 	margin: 0;
+	font-size: 16px;
 	padding: 0;
 	height: 100dvh;
-    position: relative;
+	position: relative;
+}
+p {
+	padding: 0;
+	margin: 0;
 }
 .to-drag {
+	background-size: cover; /* или contain, если хотите сохранить пропорции */
+	background-position: center; /* Центрирование изображения */
+	background-repeat: no-repeat; /* Запрет на повтор изображения */
 	margin-left: 10px;
 	display: inline-block;
 	position: absolute;
-	background-color: red;
 	width: 100px;
 	height: 100px;
 	cursor: pointer;
 	transition: height 0.3s ease-in-out;
 }
 .drag-area {
-    position: relative;
+	position: relative;
 	height: 130px;
-    width: 500px;
+	width: 100%;
 	background-color: burlywood;
 	text-align: center;
-	display: grid;
 	overflow-x: auto; /* Горизонтальная прокрутка */
 	white-space: nowrap;
-	gap: 5px;
+	display: flex;
+	flex-wrap: nowrap;
 }
 
-.head {
+.cap {
 	background-color: rgb(148, 148, 253);
 }
-.chest {
+.milk {
 	background-color: rgb(165, 240, 130);
 }
-.hips {
+.topping {
 	background-color: rgb(245, 217, 95);
 }
-.feet {
+.teabase {
 	background-color: rgb(236, 166, 166);
 }
 .to-drop {
 	width: 150px;
 	height: 150px;
 	border: 1px dashed blue;
+}
+
+.drop-area-cap {
+	background-size: cover; /* или contain, если хотите сохранить пропорции */
+	background-position: center; /* Центрирование изображения */
+	background-repeat: no-repeat; /* Запрет на повтор изображения */
+	background-image: url('./tea.png');
+}
+
+.timer-container {
+	display: flex;
+	background-color: rgb(229, 214, 243);
+	align-items: center;
+	height: 40px;
+	width: 60px;
+	padding: 10px;
+}
+.task {
+	background: rgb(227, 197, 255);
+	padding: 10px;
+}
+.score-container {
+	display: flex;
+}
+.record-container {
+	display: flex;
+}
+#game-header{
+	display: flex;
 }

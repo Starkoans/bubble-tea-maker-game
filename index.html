@@ -9,12 +9,25 @@
 		<title>Document</title>
 
 		<script
+			type="module"
 			defer
 			src="./init-items.js"
 		></script>
+		
+		<script
+			type="module"
+			defer
+			src="./items.js"
+		></script>
 		<script
 			defer
+			type="module"
 			src="./main.js"
+		></script>
+		<script
+			type="module"
+			defer
+			src="./level-task.js"
 		></script>
 		<link
 			href="./styles.css"
@@ -23,7 +36,17 @@
 	</head>
 	<body>
 		<div class="drag-area"></div>
-		<div class="to-drop"></div>
+		<section id="game-header">
+			<div class="timer-container container"> Timer: <p class="timer">0</div></div>
+			<button class="start-btn">Start</button>
+			<div>
+				<div class="score-container container"> Score: <p class="score">0</div></div>
+				<div class="record-container container"> Your record: <p class="record">0</div></div>
+			</div>
+		</section>
+		
+		<div class="task"></div>
+		<div class="to-drop drop-area-head"></div>
 		<div class="to-drop"></div>
 		<div class="to-drop"></div>
 		<div class="to-drop"></div>

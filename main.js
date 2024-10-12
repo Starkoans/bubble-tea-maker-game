@@ -1,8 +1,10 @@
 let dragElems = document.querySelectorAll('.to-drag');
 const spawnArea = document.querySelector('.drag-area');
 let dropAreas = document.querySelectorAll('.to-drop');
-let droppedList = document.querySelector('.dropped-list');
-let droppedListArr = [];
+export let droppedList = document.querySelector('.dropped-list');
+export let droppedListArr = [];
+
+
 
 dragElems.forEach((dragElement) => {
 	dragElement.ondragstart = function () {
@@ -13,10 +15,10 @@ dragElems.forEach((dragElement) => {
 	};
 });
 
-let collisionHeadFlag = false;
-let collisionChestFlag = false;
-let collisionHipsFlag = false;
-let collisionFeetFlag = false;
+let collisionCapFlag = false;
+let collisionMilkFlag = false;
+let collisionToppingFlag = false;
+let collisionTeabaseFlag = false;
 
 function dropItem(item, area) {
 	const dragRect = item.getBoundingClientRect();
@@ -24,17 +26,41 @@ function dropItem(item, area) {
 
 	const centerX = targetRect.left + targetRect.width / 2 - dragRect.width / 2;
 	const centerY = targetRect.top;
-
+	item.classList.add('dropped')
 	item.style.left = centerX + 'px';
 	item.style.top = centerY + 'px';
-	droppedListArr.shift(item);
-	console.dir(item.dataset.title);
+	droppedListArr.push(item.id);
 	const droppedElem = document.createElement('p');
 	droppedElem.innerText = item.innerText;
-	droppedElem.dataset.id = item.id;
+	droppedElem.dataset.id = `${item.id}-list`;
+	droppedElem.dataset.category = item.dataset.category;
+	
 	droppedList.appendChild(droppedElem);
 }
+function returnToSpawn(element) {
+	document.body.removeChild(element);
 
+	const elementWidth = 150;
+	const gap = 10;
+	const positionX = (element.dataset.id - 1) * (elementWidth + gap);
+	const positionY = 10;
+
+	element.style.left = `${positionX}px`;
+	element.style.top = `${positionY}px`;
+	element.classList.remove('dropped')
+	spawnArea.appendChild(element);
+	element.style.height = '100px';
+}
+
+export function cleanDropareas() {
+	let toRemove = document.body.querySelectorAll('.dropped');
+	console.log(toRemove)
+	toRemove.forEach((elem) => {
+		
+		returnToSpawn(elem);
+		removeFromList(elem);
+	});
+}
 function handleMousedown(event, element) {
 	var dragElemCoords = getCoords(element);
 	let shiftX = event.pageX - dragElemCoords.left;
@@ -48,54 +74,66 @@ function handleMousedown(event, element) {
 
 	document.onmousemove = function (e) {
 		moveAt(e, element, shiftX, shiftY);
+		removeFromList(element);
 
-		collisionHeadFlag = checkCollision(element, dropAreas[0]);
-		collisionChestFlag = checkCollision(element, dropAreas[1]);
-		collisionHipsFlag = checkCollision(element, dropAreas[2]);
-		collisionFeetFlag = checkCollision(element, dropAreas[3]);
+		collisionCapFlag = checkCollision(element, dropAreas[0]);
+		collisionMilkFlag = checkCollision(element, dropAreas[1]);
+		collisionToppingFlag = checkCollision(element, dropAreas[2]);
+		collisionTeabaseFlag = checkCollision(element, dropAreas[3]);
 	};
 
 	element.onmouseup = function () {
 		document.onmousemove = null;
 		element.onmouseup = null;
 
-		if (collisionHeadFlag && element.dataset.category ==='head') {
+		if (collisionCapFlag && element.dataset.category === 'cap') {
 			element.style.height = '150px';
+
+			let sameCategoryElemsInList = droppedList.querySelectorAll(
+				`[data-category="${element.dataset.category}" ]`
+			);
+
+			if (sameCategoryElemsInList.length > 0) {
+				sameCategoryElemsInList.forEach((sameElem) => {
+					let sameElemId = sameElem.dataset.id;
+					let cuttedID = sameElemId.substring(0, sameElemId.length - 5);
+
+					let elemToRemove = document.querySelector(`[data-id="${cuttedID}" ]`);
+					if (cuttedID !== element.id) {
+						returnToSpawn(elemToRemove);
+					}
+				});
+			}
 			dropItem(element, dropAreas[0]);
-		} else if (collisionChestFlag && element.classList.category ==='chest') {
+
+		} else if (collisionMilkFlag && element.dataset.category === 'milk') {
 			element.style.height = '150px';
 			dropItem(element, dropAreas[1]);
-		} else if (collisionHipsFlag && element.classList.category ==='hips') {
+		} else if (collisionToppingFlag && element.dataset.category === 'topping') {
 			element.style.height = '150px';
 			dropItem(element, dropAreas[2]);
-		} else if (collisionFeetFlag && element.classList.category ==='feet') {
+		} else if (collisionTeabaseFlag && element.dataset.category === 'teabase') {
 			element.style.height = '150px';
 			dropItem(element, dropAreas[3]);
 		} else {
-			removeItem(element);
+			returnToSpawn(element);
 		}
 	};
 }
 
-function removeItem(element) {
-	document.body.removeChild(element);
+function removeFromList(element) {
 	let elemToDropFromList = droppedList.querySelector(
-		`[data-id="${element.id}" ]`
+		`[data-id="${element.dataset.id}-list" ]`
 	);
-	console.log(elemToDropFromList);
+	// console.log('remove: ', elemToDropFromList);
 	if (elemToDropFromList !== null) {
+		let filteredList = droppedListArr.filter(
+			(item) => item !== element.dataset.id
+		);
+		droppedListArr = filteredList;
+
 		droppedList.removeChild(elemToDropFromList);
 	}
-	const elementWidth = 150;
-	const gap = 10;
-
-	const positionX = element.id * (elementWidth + gap);
-	const positionY = 10;
-
-	element.style.left = `${positionX}px`;
-	element.style.top = `${positionY}px`;
-	spawnArea.appendChild(element);
-	element.style.height = '100px';
 }
 
 function moveAt(e, element, shiftX, shiftY) {
