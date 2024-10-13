@@ -17,7 +17,7 @@ let restartBtn = document.querySelector('.restart-btn');
 let startModal = document.getElementById('startGameModal');
 let endModal = document.getElementById('endGameModal');
 
-// startModal.style.display = 'flex';
+startModal.style.display = 'flex';
 console.log(startModal);
 
 let scoreContainer = document.querySelector('.score');
@@ -56,6 +56,9 @@ function loadNewList() {
 	];
 
 	let taskList = document.createElement('div');
+	taskList.style.backgroundColor="white";
+	taskList.style.padding="10px"
+	
 
 	shuffledArr.forEach((item) => {
 		let li = document.createElement('div');
@@ -63,13 +66,11 @@ function loadNewList() {
 		let img = document.createElement('img');
 		img.src = item.img;
 		img.alt = item.title;
-		img.style.borderRadius = '6px';
+		
 		img.style.height = '100px';
 		img.style.width = '100px';
 		li.appendChild(img);
 		li.classList.add(`${item.category}`);
-		li.style.borderRadius = '10px';
-		// li.appendChild(item.title);
 		taskList.appendChild(li);
 		taskListArr.push(String(item.id));
 	});
@@ -95,10 +96,10 @@ localStorage.setItem('gameCount', currentGameCount);
 playerName.value =
 	localStorage.getItem('playername') || `Player ${currentGameCount}`;
 
-function addRecord() {
+function addRecord(newScore) {
 	const newRecord = {
 		name: playerName.value,
-		score: parseInt(score),
+		score: parseInt(newScore),
 	};
 	records.push(newRecord);
 	records.sort((a, b) => b.score - a.score);
@@ -126,12 +127,12 @@ function startGame() {
 	timer.innerText = counter;
 	let counterID = setInterval(() => {
 		counter = counter - 1;
-		timer.innerText = counter;
+		timer.innerText = '0:'+`${counter<10? 0 : ''}` +`${counter}`;
 		console.log(taskListArr, droppedListArr);
 		if (counter === 0) {
 			clearInterval(counterID);
 			startBtn.disabled = false;
-			addRecord();
+			addRecord(score);
 			endModal.style.display = 'block';
 		}
 

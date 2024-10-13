@@ -5,7 +5,7 @@ body {
 	padding: 0;
 	height: 100dvh;
 	position: relative;
-	background-color: rgb(53, 53, 80);
+	background-color: #8f8265;
 	color: white;
 	user-select: none;
 	-webkit-user-select: none; /* Для браузеров на основе WebKit */
@@ -31,9 +31,9 @@ li {
 	list-style-type: none;
 }
 .drop-area {
-	height: 600px;
-	width: 360px;
-	background-color: rgb(27, 27, 43);
+	height: 640px;
+	width: 365px;
+	/* background-color: #0e082a; */
 	background-size: cover; /* или contain, если хотите сохранить пропорции */
 	background-position: center; /* Центрирование изображения */
 	background-repeat: no-repeat;
@@ -49,15 +49,16 @@ li {
 	width: 90px;
 	height: 90px;
 	cursor: pointer;
-	border-radius: 10px;
-	padding: 10px;
+	/* border-radius: 10px; */
+	
 	transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
 .drag-area {
 	position: relative;
-	height: 180px;
+	height: 160px;
 	width: 100%;
-	background-color: rgb(27, 27, 43);
+	background-color: #7D7C78;
+
 	text-align: center;
 	overflow-x: auto; /* Горизонтальная прокрутка */
 	white-space: nowrap;
@@ -65,12 +66,12 @@ li {
 	flex-wrap: nowrap;
 }
 .btn {
-	color: white;
-	background: linear-gradient(to right, #ff2d2d, #ff8e38);
+	color: #0e082a;
+	background: linear-gradient(to right, #28e8d8, #f91e64);
 	margin-top: 30px;
 	position: relative;
 	border: none;
-	color: white;
+
 	padding: 15px 30px;
 	font-size: 20px;
 	font-weight: 800;
@@ -79,12 +80,15 @@ li {
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	transform: skewX(-20deg);
-	border: 2px solid black;
+	border: 2px solid #0e082a;
 	transition: all 0.3s ease;
+}
+.btn:hover{
+	padding: 15px 40px;
 }
 input {
 	border-bottom: 2px solid black;
-	color: #eb3288;
+	color: #f91e64;
 	font-size: 20px;
 	font-weight: 800;
 	padding-bottom: 5px;
@@ -116,11 +120,11 @@ input {
 }
 .topping {
 	background-color: rgba(255, 213, 29, 0.336);
-	border: 5px solid #ccc509;
+	border: 5px solid #DCA323;
 }
 .teabase {
 	background-color: rgba(255, 42, 42, 0.336);
-	border: 5px solid #861625;
+	border: 5px solid #F91E64;
 }
 .to-drop {
 	width: 360px;
@@ -144,8 +148,8 @@ section#level {
 
 .timer-container {
 	display: flex;
-	background-color: rgb(229, 214, 243);
-	color: #350032;
+	background: linear-gradient(to right, #ff6193, #dca323); 
+	color: #0e082a;
 	font-size: 20px;
 	font-weight: 800;
 	align-items: center;
@@ -160,29 +164,37 @@ section#level {
 	background-position: center; /* Центрирование изображения */
 	background-repeat: no-repeat; /* Запрет на повтор изображения */
 	background-image: url('./customer_1.png');
-	background-color: rgb(255, 255, 255);
+	/* background-color: rgb(255, 255, 255); */
 	height: 120px;
 	margin-top: 80px;
 	border: 5px solid rgb(26, 26, 41);
 	width: 120px;
 }
 .task {
-	background: white;
+	flex-direction: row;
+	display: flex;
+	/* background: white; */
 	padding: 10px;
 	height: fit-content;
 }
-.task::after {
+.task::before {
 	content: '';
 	position: relative;
-	bottom: -100px;
-	left: 80%;
-
+	bottom: -130px;
+	left: 90%;
 	transform: translateX(-50%);
 	border-left: 40px solid transparent;
 	border-right: 40px solid transparent;
 	border-top: 70px solid white;
 }
 .full-task {
+	border: 10px solid #4A4944;
+	background-size: cover; /* или contain, если хотите сохранить пропорции */
+	background-position: center; /* Центрирование изображения */
+	background-repeat: no-repeat; /* Запрет на повтор изображения */
+	margin: 20px;
+	padding: 0 20px ;
+	background-image: url('./background_cafe.jpg');
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -191,7 +203,7 @@ section#level {
 }
 .task div {
 	display: flex;
-	flex-direction: row;
+	
 }
 .task div div {
 	margin-left: 10px;
@@ -204,9 +216,20 @@ section#level {
 	font-size: 20px;
 }
 .record-container {
+	height: 300px;
+	padding: 10px;
+	overflow-y: scroll;
 	display: flex;
 }
+.record {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	text-align: start;
+}
 #game-header {
+	margin-top: 10px;
+	margin-bottom: 10px;
 	display: flex;
 	align-items: center;
 	width: 100vw;
@@ -220,7 +243,7 @@ section#level {
 	display: none; /* Скрыто по умолчанию */
 	align-items: center;
 	position: fixed;
-	z-index: 1;
+	z-index: 2000;
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -229,21 +252,21 @@ section#level {
 }
 
 .modal-content {
-	background-color: #e5e3ff;
+	background-color: #dca323;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 	align-items: center;
 	justify-content: center;
-	color: black;
+	color: #0e082a;
 	margin: 15% auto;
-	padding: 30px;
 
-	border: 2px solid rgb(0, 0, 0) ea3;
+	padding: 30px;
 	width: 30%;
 	font-size: 20px;
-	border-radius: 10px;
+	border: 5px solid #0e082a;
 }
+
 .modal-content p {
 	text-align: center;
 }

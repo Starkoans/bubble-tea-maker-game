@@ -24,7 +24,7 @@ function dropItem(item, area) {
 
 	const centerX = targetRect.left + targetRect.width / 2 - dragRect.width / 2;
 	const centerY = targetRect.top;
-	// item.classList.add('dropped');
+	item.classList.add('dropped');
 	item.style.left = centerX + 'px';
 	item.style.top = centerY + 'px';
 
@@ -45,9 +45,9 @@ function returnToSpawn(element) {
 	element.classList.remove('dropped');
 
 	spawnArea.appendChild(element);
-	element.style.height = '100px';
-	
-	element.style.width = '100px';
+	element.style.height = '90px';
+
+	element.style.width = '90px';
 	let newDroppedList = droppedListArr.filter((item) => item.id !== element.id);
 	droppedListArr = newDroppedList;
 }

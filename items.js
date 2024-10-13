@@ -1,6 +1,6 @@
 export const itemsArr = [
 	{ id: 1, category: 'teabase', title: 'green tea', img:'./teabase_green_tea.webp'  },
-	{ id: 2, category: 'teabase', title: 'coffee', img:'./teabase_black_tea.webp'  },
+	{ id: 2, category: 'teabase', title: 'coffee', img:'./teabase_coffee.webp'  },
 	{ id: 3, category: 'teabase', title: 'black tea', img:'./teabase_black_tea.webp' },
 	{ id: 4, category: 'teabase', title: 'oolong tea', img:'./teabase_oolong_tea.webp'  },
 
